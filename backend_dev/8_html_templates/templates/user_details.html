@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <body>
+
+        <table border = 1>
+        <tr>
+            {% for header in all_users[0].keys() %}
+                <th> {{ header }} </th>
+            {% endfor %}
+        </tr>
+        {% for user_details in all_users %}
+             <tr>
+                {% for value in user_details.values() %}
+                    <td> {{ value }} </td>
+                {% endfor %}
+             </tr>
+        {% endfor %}
+        </table>
+
+
+        <!-- {% for user_details in all_users %}
+
+            <p> User - {{ user_details['name'] }} </br>
+            Age - {{ user_details['age'] }}
+            </p>
+
+        {% endfor %} -->
+    </body>
+</html>

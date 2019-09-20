@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <body>
+
+        <table border = 1>
+        <tr>
+            {% for header in all_events[0].keys() %}
+                <th> {{ header }} </th>
+            {% endfor %}
+        </tr>
+        {% for event_details in all_events %}
+             <tr>
+                {% for value in event_details.values() %}
+                    <td> {{ value }} </td>
+                {% endfor %}
+             </tr>
+        {% endfor %}
+        </table>
+
+    </body>
+</html>
