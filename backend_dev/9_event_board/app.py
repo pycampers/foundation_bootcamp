@@ -29,5 +29,13 @@ def home():
     all_events = db.all()
     return render_template('events.html', all_events=all_events)
 
+
+@app.route('/remove_event', methods=['POST'])
+def remove_event():
+    event_name = request.form.get('event_name')
+    result = db.remove(Event.name == event_name)
+    print(result)
+    return redirect(url_for('home'))
+
 if __name__ == '__main__':
     app.run(debug = True)
