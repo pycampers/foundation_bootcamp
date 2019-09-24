@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    </head>
+
+    <body>
+    <div style='margin-left:10px'>
+
+        <form action="/edit_note?note_no={{note_no}}" method='post'>
+            Title:<br>
+            <div class="ui input focus">
+                <input type="text" name="title" value="{{ note_to_edit['title'] }}">
+            </div>
+            <br>
+            Note:<br>
+            <div class="ui input focus">
+                <textarea rows="5" cols="60" name="note">{{ note_to_edit['note'] }}
+                </textarea>            
+            </div>
+
+            <br><br>
+            <input type="submit" value="Submit" class="ui button">
+        </form> 
+    </div>
+    </body>
+</html>

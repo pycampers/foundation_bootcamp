@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    </head>
+
+    <body>
+        <div style='margin-left:10px'>
+        <form action="/" method='post'>
+            Title:<br>
+            <div class="ui input focus">
+                <input type="text" name="title" >
+            </div>
+            <br>
+            Note:<br>
+            <div class="ui input focus">
+                <textarea rows="5" cols="60" name="note"></textarea>
+            </div>
+            
+            <br><br>
+            <input type="submit" value="Submit" class="ui button" >
+        </form> 
+
+        {% for note_dict in all_notes %}
+            <h3 class="ui header">{{note_dict['title']}}</h3>
+            <a href='/edit_note?note_no={{loop.index}}'>
+                <button class="ui button">Edit</button>
+            </a>
+            <a href='/delete_note?note_no={{loop.index}}'>
+                <button class="ui button">Delete</button>
+            </a>
+            <span style="white-space: pre-line">
+                <p style="margin-bottom:-15px; margin-top:10px">{{note_dict['note']}}</p>
+            </span>
+        {% endfor %}
+        </div>
+    </body>
+</html>
