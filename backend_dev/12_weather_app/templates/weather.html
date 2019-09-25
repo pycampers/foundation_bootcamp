@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <h1>Weather Info for {{ weather_data['title'] }}</h1>    
+  </div>
+    
+
+    <div class="container">
+    {% for single_day_weather_data in weather_data['consolidated_weather'] %}
+        <div class="row">
+            <div class="col-sm">
+            <div style='margin-left:10px'>
+                <h3>{{ single_day_weather_data['applicable_date'] }}</h3>
+                <h3>{{ single_day_weather_data['weather_state_name'] }}</h3>
+                <i class="{{ weather_states[single_day_weather_data['weather_state_name']] }}" style="font-size:60px;"></i>
+
+                
+            </div>
+              <h1 style='font-size:150px; margin-top:-30px;'>
+                {{ single_day_weather_data['the_temp']|round }}
+              </h1>
+            </div>
+            <div class="col-sm">
+             <h4>
+             Humidity : {{ single_day_weather_data['humidity'] }}%</h4>
+             <h4>
+             Wind Speed : {{ single_day_weather_data['wind_speed']|round }}km/h</h3>
+             </h4><h4>
+             Visibility : {{ single_day_weather_data['visibility']|round }}%</h3>
+            </h4><h4>
+             Min Temp : {{ single_day_weather_data['min_temp'] }}C</h3>
+            </h4><h4>
+             Max Temp : {{ single_day_weather_data['max_temp'] }}C</h3>
+            </h4><h4>
+             Predictability : {{ single_day_weather_data['predictability'] }}%</h3>
+            </h4>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

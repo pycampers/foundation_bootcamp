@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>My Weather App</h1>
+  <form action="/show_weather" method='post'>
+        Enter your city:<br>
+        <input type="text" name="city_name" value="Bangalore">
+        <br>
+        <input type="submit" value="Submit">
+  </form> 
+  <br><br>
+{% endblock %}
