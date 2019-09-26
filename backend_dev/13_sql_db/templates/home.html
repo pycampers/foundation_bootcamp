@@ -1,0 +1,25 @@
+<html>
+<body>
+    <h1>Hello welcome to user board </h1>
+
+    <form action="/add_student" method='post'>
+        First name:<br>
+        <input type="text" name="firstname">
+        <br>
+        Last name:<br>
+        <input type="text" name="lastname">
+        <br>
+        Country:<br>
+        <input type="text" name="country">
+        <br>
+        phone-no:<br>
+        <input type="text" name="phone_no">
+        <br><br>
+        <input type="submit" value="Submit">
+    </form> 
+
+    {% for user in all_users %}
+        <h4>{{ user[0] }} - {{ user[1] }} @ {{ user[3] }} : {{ user[4] }}</h4>
+    {% endfor %}
+</body>
+</html>
