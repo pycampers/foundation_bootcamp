@@ -1,0 +1,8 @@
+<html>
+    <body>
+        <h1>Hello welcome to the blood bank.</h1>
+        {% for donor in donor_list %}
+            <h4>{{ donor['name'] }} - {{ donor['phone_no'] }}</h4>
+        {% endfor %}
+    </body>
+</html>
