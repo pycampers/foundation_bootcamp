@@ -25,6 +25,9 @@
         <tr>
             <th>Name</th>
             <th>Phone no</th>
+            <th>Donate</th>
+            <th>Donation Count</th>
+            <th>Latest Donation</th>
         </tr>
         {% for donor in donor_list %}
             <tr>
@@ -33,7 +36,19 @@
                         {{ donor['phone_no'] }}
                     </a>        
                 </td>
+                <td>
+                    <a href='/record_time?phone_no={{ donor['phone_no'] }}'>
+                        <button>Donate</button>
+                    </a>
+                </td>
+                 <td>
+                    {{ donor['count'] }}
+                </td>
+                <td>
+                    {{ latest_donations[donor['phone_no']] }}
+                </td>
             </tr>
+
          {% endfor %}
         </table>
     </body>
