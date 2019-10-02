@@ -28,9 +28,9 @@
         </tr>
         {% for donor in donor_list %}
             <tr>
-                <td>{{ donor['name'] }}</td>
-                <td><a href="tel:{{ donor['phone_no'] }}">
-                        {{ donor['phone_no'] }}
+                <td>{{ donor[1] }}</td>
+                <td><a href="tel:{{ donor[5] }}">
+                        {{ donor[5] }}
                     </a>        
                 </td>
             </tr>

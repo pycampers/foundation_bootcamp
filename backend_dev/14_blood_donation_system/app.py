@@ -2,12 +2,15 @@ from flask import Flask, render_template, request, redirect, url_for
 from tinydb import TinyDB, Query
 from datetime import datetime
 from dateutil import parser
+import models
+from database_manager import Manager
 
 # version - 0.2
 
 # TODO 
 # - Disable donate button according the threshold
 # - Improve the UI
+# - Add the capitalize function to name
 # - Move to SQL
 
 
@@ -27,6 +30,7 @@ def home():
 
 @app.route('/register_donor', methods=['POST'])
 def register_donor():
+    db_manager = Manager('blood_bank.db')
     donor_info = {}
     donor_info['name'] = request.form.get('name').lower()
     donor_info['age'] = request.form.get('age').lower()
@@ -39,36 +43,40 @@ def register_donor():
         if value == "":
             return "Please enter all the details."
 
-    search_result = db.search(Donor.phone_no == donor_info['phone_no'])
-    if len(search_result) != 0:
-        return "Donor already Exists." 
+    result = db_manager.read_from_database_filter(
+                        models.Donors.c.phone_no == donor_info['phone_no'], 
+                        models.Donors
+                        )
+
+    if result != None:
+        return "Donor already Exists."
     else:
-        db.insert(donor_info)
-        return redirect(url_for('home'))
+        db_manager.save_to_database(donor_info, models.Donors)
+    return redirect(url_for('home'))
 
 
 @app.route('/receiver', methods=['POST', 'GET'])
 def receiver():
+    db_manager = Manager('blood_bank.db')
+
     if request.method == 'GET':
         return render_template('receiver_form.html')
     else:
         blood_group = request.form.get('blood_group').lower()
         city = request.form.get('city').lower()
-        result = db.search((Donor.blood_group == blood_group) & (Donor.city == city))
-
-        for donor_info in result:
-            donor_info['name'] = donor_info['name'].capitalize()
-
-
+        # result = db.search((Donor.blood_group == blood_group) & (Donor.city == city))
+        result = db_manager.read_from_database_two_filter(
+            models.Donors.c.city == city,
+            models.Donors.c.blood_group == blood_group,
+            models.Donors
+            )
         return render_template('show_result.html', donor_list=result)
 
 @app.route('/all_donors')
 def show_all_donors():
-    donor_list = db.all()
-    for donor_info in donor_list:
-        donor_info['name'] = donor_info['name'].capitalize()
-
-    return render_template('donor_list.html', donor_list=donor_list, latest_donations=latest_donations)
+    db_manager = Manager('blood_bank.db')
+    donor_list = db_manager.read_all_data_from_database(models.Donors)
+    return render_template('donor_list.html', donor_list=donor_list)
 
 @app.route('/record_time')
 def record_time():

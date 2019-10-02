@@ -31,21 +31,21 @@
         </tr>
         {% for donor in donor_list %}
             <tr>
-                <td>{{ donor['name'] }}</td>
-                <td><a href="tel:{{ donor['phone_no'] }}">
-                        {{ donor['phone_no'] }}
+                <td>{{ donor[1] }}</td>
+                <td><a href="tel:{{ donor[5] }}">
+                        {{ donor[5] }}
                     </a>        
                 </td>
                 <td>
-                    <a href='/record_time?phone_no={{ donor['phone_no'] }}'>
+                    <a href='/record_time?phone_no={{ donor[5] }}'>
                         <button>Donate</button>
                     </a>
                 </td>
                  <td>
-                    {{ donor['count'] }}
+                    {{ donor[6] }}
                 </td>
                 <td>
-                    {{ latest_donations[donor['phone_no']] }}
+                    {{ donor[7] }}
                 </td>
             </tr>
 
