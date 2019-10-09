@@ -1,7 +1,22 @@
-<html>
-    <body>
-        <h1>Hello welcome to the blood bank.</h1>
-        <h3><a href='/donor'>Donors</a></h3>
-        <h3><a href='/receiver'>Receivers</a></h3>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+     <h1>Hello welcome to the blood bank.</h1>
+  <div class="row">
+    <div class="col-sm">
+      <h3><a href='/donor'>
+        <button class="ui button">Donors</button>
+      </a></h3>
+    </div>
+    <div class="col-sm">
+        <h3><a href='/receiver'>
+            <button class="ui button">Receiver</button>
+        </a></h3>    
+    </div>
+
+  </div>
+</div>
+       
+        
+
+{% endblock %}

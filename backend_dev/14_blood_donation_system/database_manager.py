@@ -40,6 +40,7 @@ class Manager:
 # print(result)
 
 
+
 # my_info =  [{'name':'Lorenzo', 
 #             'lastname': 'L',
 #             'country': 'Italy',

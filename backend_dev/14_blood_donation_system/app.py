@@ -1,23 +1,35 @@
 from flask import Flask, render_template, request, redirect, url_for
-from tinydb import TinyDB, Query
+# from tinydb import TinyDB, Query
 from datetime import datetime
 from dateutil import parser
 import models
 from database_manager import Manager
 
-# version - 0.2
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
+
+
+
+dbname = 'blood_bank.db'
+engine = create_engine('sqlite:///' + dbname)
+
+database_connection = engine.connect()
+        
+Session = sessionmaker(bind=engine)
+session = Session()
+# version - 0.3
 
 # TODO 
 # - Disable donate button according the threshold
 # - Improve the UI
 # - Add the capitalize function to name
-# - Move to SQL
 
 
 latest_donations = {}
 
-db = TinyDB('db.json')
-Donor = Query()
+# db = TinyDB('db.json')
+# Donor = Query()
 app = Flask(__name__)
 
 @app.route('/donor')
@@ -80,22 +92,35 @@ def show_all_donors():
 
 @app.route('/record_time')
 def record_time():
-    donor_number = request.args.get('phone_no')
-    last_donation_time_str = latest_donations.get(donor_number)
-    if last_donation_time_str:
-        last_donation_time = parser.parse(last_donation_time_str)
-        print('Donation time diff:', datetime.now() - last_donation_time)
+    # db_manager = Manager('blood_bank.db')
     current_time = datetime.now().strftime('%c')
-    print(donor_number, current_time)
-    latest_donations[donor_number] = current_time
-    donor_details = db.search(Donor.phone_no == donor_number)[0]
-    print(donor_details)
-    donation_count = donor_details.get('count')
 
-    if donation_count == None:
-        db.update({'count': 1}, Donor.phone_no == donor_number)
-    else:
-        db.update({'count': donation_count+1}, Donor.phone_no == donor_number)
+    donor_number = request.args.get('phone_no')
+    donor = session.query(models.Donors).filter(models.Donors.phone_no == donor_number).\
+        update({models.Donors.latest_donation: current_time}, synchronize_session=False)
+    print(donor)
+    donor.latest_donation = current_time
+    # result = db_manager.session.query(models.Donors).get(1)
+    # result = db_manager.read_from_database_filter(
+    #                 models.Donors.c.phone_no == donor_number, 
+    #                 models.Donors
+    #                 )
+    # result.latest_donation = current_time
+    # db_manager.session.commit()
+    # last_donation_time_str = latest_donations.get(donor_number)
+    # if last_donation_time_str:
+    #     last_donation_time = parser.parse(last_donation_time_str)
+    #     print('Donation time diff:', datetime.now() - last_donation_time)
+    # print(donor_number, current_time)
+    # latest_donations[donor_number] = current_time
+    # donor_details = db.search(Donor.phone_no == donor_number)[0]
+    # print(donor_details)
+    # donation_count = donor_details.get('count')
+
+    # if donation_count == None:
+    #     db.update({'count': 1}, Donor.phone_no == donor_number)
+    # else:
+    #     db.update({'count': donation_count+1}, Donor.phone_no == donor_number)
 
     return redirect(url_for('show_all_donors'))
 

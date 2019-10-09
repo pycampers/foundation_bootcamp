@@ -1,15 +1,21 @@
-<html>
-    <body>
+{% extends "base.html" %}
+{% block content %}
         <h1>Hello welcome</h1>
-        <form action="/register_donor" method='post'>
-            Name:<br>
-            <input type="text" name="name">
+        <div class='container'>
+        <div class="col-ms-6" style='width: 50%;'>
+        <form action="/register_donor" method='post' class="ui form">
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name">
+            </div>
             <br>
-            Age:<br>
+            <div class="field">
+                <label>Age</label>
             <input type="text" name="age">
+            </div>
             <br>
             Blood Group:<br>
-            <select name="blood_group">
+            <select name="blood_group" class="ui fluid dropdown">
                 <option value="a+">A+</option>
                 <option value="b+">B+</option>
                 <option value="ab+">AB+</option>
@@ -28,7 +34,8 @@
             <br>
             
             <br><br>
-        <input type="submit" value="Submit">
+        <button class="ui button" type="submit">Submit</button>
 </form> 
-    </body>
-</html>
+</div> 
+</div>   
+{% endblock %}
