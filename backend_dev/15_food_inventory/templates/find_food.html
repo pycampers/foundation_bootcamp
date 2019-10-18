@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Find Food Page</h1>
+    <form action="/food_receive" method='post', class='ui form' style='width: 50%;'>
+        Food Type:<br>
+        <input type="text" name="food_type" value="veg/non-veg">
+        <br>
+        City:<br>
+        <input type="text" name="city">
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>     
+</div>
+{% endblock %}
